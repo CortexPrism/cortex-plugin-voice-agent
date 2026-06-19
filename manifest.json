@@ -1,0 +1,188 @@
+{
+  "name": "cortex-plugin-voice-agent",
+  "version": "1.0.0",
+  "description": "Voice Agent Interface — Cortex agent accessible via phone calls using Vapi and Retell AI. Users call a number, speak their request, and the agent responds conversationally with ultra-low-latency voice AI. Trigger tools during calls.",
+  "kind": "esm",
+  "entryPoint": "mod.ts",
+  "runtime": "deno",
+  "author": "CortexPrism",
+  "license": "MIT",
+  "repository": "https://github.com/CortexPrism/cortex-plugin-voice-agent",
+  "homepage": "https://cortexprism.io/marketplace/plugins/voice-agent",
+  "capabilities": ["tools", "network:fetch"],
+  "tools": [
+    {
+      "name": "voice_start_call",
+      "description": "Initiate an outbound voice call to a phone number. The agent will converse with the recipient.",
+      "params": [
+        {
+          "name": "phone_number",
+          "type": "string",
+          "description": "Phone number to call (E.164 format)",
+          "required": true
+        },
+        {
+          "name": "provider",
+          "type": "string",
+          "description": "Voice provider",
+          "required": false,
+          "enum": ["vapi", "retell", "auto"]
+        },
+        {
+          "name": "initial_message",
+          "type": "string",
+          "description": "Initial message the agent should say",
+          "required": false
+        },
+        {
+          "name": "task",
+          "type": "string",
+          "description": "Task description for the agent (e.g. 'Schedule a meeting', 'Check order status')",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "voice_get_number",
+      "description": "Provision or list available phone numbers for inbound/outbound calls",
+      "params": [
+        {
+          "name": "action",
+          "type": "string",
+          "description": "Action",
+          "required": false,
+          "enum": ["list", "provision", "release"]
+        },
+        {
+          "name": "provider",
+          "type": "string",
+          "description": "Voice provider",
+          "required": false,
+          "enum": ["vapi", "retell"]
+        },
+        {
+          "name": "country",
+          "type": "string",
+          "description": "Country code for provisioning (e.g. US, KR)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "voice_get_transcript",
+      "description": "Retrieve the transcript of a completed voice call with speaker diarization and timestamps",
+      "params": [
+        { "name": "call_id", "type": "string", "description": "Call ID", "required": true },
+        {
+          "name": "format",
+          "type": "string",
+          "description": "Output format",
+          "required": false,
+          "enum": ["json", "text", "summary"]
+        }
+      ]
+    },
+    {
+      "name": "voice_configure_agent",
+      "description": "Configure the voice agent: voice selection, language, interruption sensitivity, and tool access",
+      "params": [
+        {
+          "name": "provider",
+          "type": "string",
+          "description": "Voice provider",
+          "required": true,
+          "enum": ["vapi", "retell"]
+        },
+        {
+          "name": "voice_id",
+          "type": "string",
+          "description": "Voice ID (provider-specific)",
+          "required": false
+        },
+        {
+          "name": "language",
+          "type": "string",
+          "description": "Language code (e.g. en-US, ko-KR)",
+          "required": false
+        },
+        {
+          "name": "interruption_sensitivity",
+          "type": "string",
+          "description": "How easily the agent is interrupted",
+          "required": false,
+          "enum": ["low", "medium", "high"]
+        },
+        {
+          "name": "enabled_tools",
+          "type": "string",
+          "description": "Comma-separated tool names to enable during calls",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "voice_call_status",
+      "description": "Get the status of active and recent voice calls",
+      "params": [
+        {
+          "name": "status",
+          "type": "string",
+          "description": "Filter by call status",
+          "required": false,
+          "enum": ["active", "completed", "failed", "all"]
+        },
+        {
+          "name": "limit",
+          "type": "number",
+          "description": "Max results (default: 20)",
+          "required": false
+        }
+      ]
+    }
+  ],
+  "dependencies": {},
+  "peerDependencies": { "cortex": ">=1.0.0" },
+  "ui": {
+    "settings": [
+      {
+        "section": "Vapi",
+        "fields": [
+          { "key": "vapiApiKey", "label": "API Key", "type": "secret", "defaultValue": "" },
+          { "key": "vapiAssistantId", "label": "Assistant ID", "type": "text", "defaultValue": "" }
+        ]
+      },
+      {
+        "section": "Retell AI",
+        "fields": [
+          { "key": "retellApiKey", "label": "API Key", "type": "secret", "defaultValue": "" },
+          { "key": "retellAgentId", "label": "Agent ID", "type": "text", "defaultValue": "" }
+        ]
+      },
+      {
+        "section": "Defaults",
+        "fields": [
+          {
+            "key": "defaultProvider",
+            "label": "Default Provider",
+            "type": "select",
+            "defaultValue": "vapi",
+            "enum": [
+              { "label": "Vapi", "value": "vapi" },
+              { "label": "Retell AI", "value": "retell" }
+            ]
+          },
+          {
+            "key": "defaultLanguage",
+            "label": "Default Language",
+            "type": "text",
+            "defaultValue": "en-US"
+          }
+        ]
+      }
+    ]
+  },
+  "aiDisclosure": {
+    "tools": ["Kilo (DeepSeek) — scaffold and implementation"],
+    "humanReview": true
+  }
+}
