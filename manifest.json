@@ -1,7 +1,7 @@
 {
   "name": "cortex-plugin-voice-agent",
-  "version": "1.0.0",
-  "description": "Voice Agent Interface — Cortex agent accessible via phone calls using Vapi and Retell AI. Users call a number, speak their request, and the agent responds conversationally with ultra-low-latency voice AI. Trigger tools during calls.",
+  "version": "1.0.1",
+  "description": "Voice Agent Interface \u2014 Cortex agent accessible via phone calls using Vapi and Retell AI. Users call a number, speak their request, and the agent responds conversationally with ultra-low-latency voice AI. Trigger tools during calls.",
   "kind": "esm",
   "entryPoint": "mod.ts",
   "runtime": "deno",
@@ -9,7 +9,10 @@
   "license": "MIT",
   "repository": "https://github.com/CortexPrism/cortex-plugin-voice-agent",
   "homepage": "https://cortexprism.io/marketplace/plugins/voice-agent",
-  "capabilities": ["tools", "network:fetch"],
+  "capabilities": [
+    "tools",
+    "network:fetch"
+  ],
   "tools": [
     {
       "name": "voice_start_call",
@@ -26,7 +29,11 @@
           "type": "string",
           "description": "Voice provider",
           "required": false,
-          "enum": ["vapi", "retell", "auto"]
+          "enum": [
+            "vapi",
+            "retell",
+            "auto"
+          ]
         },
         {
           "name": "initial_message",
@@ -51,14 +58,21 @@
           "type": "string",
           "description": "Action",
           "required": false,
-          "enum": ["list", "provision", "release"]
+          "enum": [
+            "list",
+            "provision",
+            "release"
+          ]
         },
         {
           "name": "provider",
           "type": "string",
           "description": "Voice provider",
           "required": false,
-          "enum": ["vapi", "retell"]
+          "enum": [
+            "vapi",
+            "retell"
+          ]
         },
         {
           "name": "country",
@@ -72,13 +86,22 @@
       "name": "voice_get_transcript",
       "description": "Retrieve the transcript of a completed voice call with speaker diarization and timestamps",
       "params": [
-        { "name": "call_id", "type": "string", "description": "Call ID", "required": true },
+        {
+          "name": "call_id",
+          "type": "string",
+          "description": "Call ID",
+          "required": true
+        },
         {
           "name": "format",
           "type": "string",
           "description": "Output format",
           "required": false,
-          "enum": ["json", "text", "summary"]
+          "enum": [
+            "json",
+            "text",
+            "summary"
+          ]
         }
       ]
     },
@@ -91,7 +114,10 @@
           "type": "string",
           "description": "Voice provider",
           "required": true,
-          "enum": ["vapi", "retell"]
+          "enum": [
+            "vapi",
+            "retell"
+          ]
         },
         {
           "name": "voice_id",
@@ -110,7 +136,11 @@
           "type": "string",
           "description": "How easily the agent is interrupted",
           "required": false,
-          "enum": ["low", "medium", "high"]
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ]
         },
         {
           "name": "enabled_tools",
@@ -129,7 +159,12 @@
           "type": "string",
           "description": "Filter by call status",
           "required": false,
-          "enum": ["active", "completed", "failed", "all"]
+          "enum": [
+            "active",
+            "completed",
+            "failed",
+            "all"
+          ]
         },
         {
           "name": "limit",
@@ -141,21 +176,43 @@
     }
   ],
   "dependencies": {},
-  "peerDependencies": { "cortex": ">=1.0.0" },
+  "peerDependencies": {
+    "cortex": ">=0.51.0"
+  },
   "ui": {
     "settings": [
       {
         "section": "Vapi",
         "fields": [
-          { "key": "vapiApiKey", "label": "API Key", "type": "secret", "defaultValue": "" },
-          { "key": "vapiAssistantId", "label": "Assistant ID", "type": "text", "defaultValue": "" }
+          {
+            "key": "vapiApiKey",
+            "label": "API Key",
+            "type": "secret",
+            "defaultValue": ""
+          },
+          {
+            "key": "vapiAssistantId",
+            "label": "Assistant ID",
+            "type": "text",
+            "defaultValue": ""
+          }
         ]
       },
       {
         "section": "Retell AI",
         "fields": [
-          { "key": "retellApiKey", "label": "API Key", "type": "secret", "defaultValue": "" },
-          { "key": "retellAgentId", "label": "Agent ID", "type": "text", "defaultValue": "" }
+          {
+            "key": "retellApiKey",
+            "label": "API Key",
+            "type": "secret",
+            "defaultValue": ""
+          },
+          {
+            "key": "retellAgentId",
+            "label": "Agent ID",
+            "type": "text",
+            "defaultValue": ""
+          }
         ]
       },
       {
@@ -166,9 +223,15 @@
             "label": "Default Provider",
             "type": "select",
             "defaultValue": "vapi",
-            "enum": [
-              { "label": "Vapi", "value": "vapi" },
-              { "label": "Retell AI", "value": "retell" }
+            "options": [
+              {
+                "label": "Vapi",
+                "value": "vapi"
+              },
+              {
+                "label": "Retell AI",
+                "value": "retell"
+              }
             ]
           },
           {
@@ -182,7 +245,9 @@
     ]
   },
   "aiDisclosure": {
-    "tools": ["Kilo (DeepSeek) — scaffold and implementation"],
+    "tools": [
+      "Kilo (DeepSeek) \u2014 scaffold and implementation"
+    ],
     "humanReview": true
   }
 }
